@@ -24,17 +24,13 @@ public class VendingMachineCLI {
 	private static final String[] SUB_MENU_OPTIONS = {SUB_MENU_FEED_MONEY, SUB_MENU_SELECT_PRODUCT, SUB_MENU_FINISH_TRANSACTION};
 	
 	private Menu menu;
-	private Product product;
 	List<Product> purchasedObjects = new ArrayList<Product>();
 	
 	public VendingMachineCLI(Menu menu) {
+
 		this.menu = menu;
 	}
-	
-	
-	
-	
-	
+
 	
 	public void run() throws IOException {
 		    VendingMachine vendingMachine = new VendingMachine();
@@ -62,60 +58,68 @@ public class VendingMachineCLI {
 				
 				while(true) {
 				String choice2 = (String)menu.getChoiceFromOptions(SUB_MENU_OPTIONS, vendingMachine.getBalance());
-				if(choice2 == "Q") {
+				if(choice2.toUpperCase() == "R") {
 					break;
 				}
-				else if(choice2.equals(SUB_MENU_FEED_MONEY)) {
-						while(true) {
-							try {System.out.println("Enter amount you would like to feed>>> ");
+				 if(choice2.equals(SUB_MENU_FEED_MONEY)) {
+					while(true) {
+						try {
+							System.out.println("Enter amount you would like to feed or (R)eturn to previous menu --> ");
+
 							Scanner in = new Scanner(System.in);
 							String input = in.nextLine();
-							if(input.toUpperCase().equals("Q")) {
+
+							if(input.toUpperCase().equals("R")) {
 								break;
 							} else {
-							double amountEntered = Double.parseDouble(input);
-							vendingMachine.feedMoney(amountEntered);
-							System.out.println("Current balance $" + vendingMachine.getBalance());
+								double amountEntered = Double.parseDouble(input);
+								vendingMachine.feedMoney(amountEntered);
+								System.out.println("Current balance $" + vendingMachine.getBalance());
 							}
 							} catch (NumberFormatException e) {
-								System.out.println("Please enter a valid dollar amount.");
+								System.out.println("Machine only accepts: $1's, $2's, $5's, & $10's "); // : needs escaped!
 							}
 					}
 						
 				} else if(choice2.equals(SUB_MENU_SELECT_PRODUCT)) {
 					while(true) {
-						System.out.println("Please enter the item you would like to purchase>>> ");
+						System.out.println("Please enter the item you would like to purchase or (R)eturn to previous menu --> ");
+
 						Scanner in = new Scanner(System.in);
 						String input = in.nextLine();
-						if(input.toUpperCase().equals("Q")) {
+
+						if(input.toUpperCase().equals("R")) {
 							break;
-						} else if(inventoryMap.containsKey(input)) {
+
+						} else if(inventoryMap.containsKey(input.toUpperCase())) {
 							if(inventoryMap.get(input).isAvailableToPurchase() && vendingMachine.balance >= inventoryMap.get(input).getPrice()) {
 								inventoryMap.get(input).purchaseItem();
 								purchasedObjects.add(inventoryMap.get(input));
 								vendingMachine.balance -= inventoryMap.get(input).getPrice();
 								vendingMachine.log(inventoryMap.get(input).getName(), (vendingMachine.balance + inventoryMap.get(input).getPrice()), vendingMachine.balance);
-								System.out.println("Purchased, anything else?");
+								System.out.println("Purchased!");
+
 							} else if(!inventoryMap.get(input).isAvailableToPurchase()) {
-								System.out.println("Sorry, SOLD OUT!");
+								System.out.println("SOLD OUT!");
 								break;
 							} else {
-								System.out.println("Balance too low, add money");
+								System.out.println("Insufficient Funds, Please make a deposit!");
 								break;
-								
-								
 							}
+
 						} else {
 							System.out.println("That is not a valid option, try again");
 							break;
 						}
 					}
+
 				} else if(choice2.equals(SUB_MENU_FINISH_TRANSACTION)){
 					vendingMachine.returnChange();
 					vendingMachine.logFile();
 					vendingMachine.balance = 0;
 					System.out.println("Final balance: $" + vendingMachine.getBalance());
 					System.out.println("");
+
 					for(Product product: purchasedObjects) {
 						String sound = product.getSound();
 						System.out.println(sound);
@@ -135,7 +139,6 @@ public class VendingMachineCLI {
 		try {
 			cli.run();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

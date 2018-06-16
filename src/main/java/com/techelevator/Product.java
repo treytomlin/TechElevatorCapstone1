@@ -1,8 +1,6 @@
 package com.techelevator;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Product {
 	private String name;
@@ -20,17 +18,17 @@ public abstract class Product {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+//	public void setPrice(double price) {
+//		this.price = price;
+//	}
 	
 	public abstract String getSound();
 		
@@ -43,9 +41,9 @@ public abstract class Product {
 	public int getNumberOfItems() {
 		return numberOfItems;
 	}
-	public void setNumberOfItems() {
-		this.numberOfItems = 5;
-	}
+//	public void setNumberOfItems() {
+//		this.numberOfItems = 5;
+//	}
 
 	public boolean isAvailableToPurchase() {
 		if(this.numberOfItems >= 1) {

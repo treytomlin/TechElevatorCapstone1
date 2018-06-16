@@ -38,8 +38,8 @@ import java.util.Scanner;
 		
 		
 		try {
-			if(userInput.toUpperCase().equals(("Q"))) {
-				choice = "Q";
+			if(userInput.toUpperCase().equals(("R"))) {
+				choice = "R";
 				return choice;
 			}
 			int selectedOption = Integer.valueOf(userInput);
@@ -69,7 +69,7 @@ import java.util.Scanner;
 		}
 		DecimalFormat myFormat = new DecimalFormat("#.00");
 		out.println("\nCurrent Money Provided: $" + myFormat.format(balance));
-		out.print("\nPlease choose an option >>> ");
+		out.print("\nPlease choose an option --> ");
 		
 		out.flush();
 	}

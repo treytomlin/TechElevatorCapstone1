@@ -10,6 +10,5 @@ public class Drink extends Product{
 		return "Glug Glug, Yum!";
 	}
 
-	
 
 }
